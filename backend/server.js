@@ -5,3 +5,7 @@ const port = 3000;
 app.post("/", (req, res) => {
   res.send("Hello world!");
 });
+
+app.listen(port, () => {
+  console.log(`Example app listening on port ${port}`)
+})
