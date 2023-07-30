@@ -8,6 +8,7 @@ function App() {
   const [selectedSeats, setSelectedSeatCount] = useState([]);
   const [isPaying, setIsPaying] = useState(false);
   const [seats, setSeats] = useState([]);
+  const [startBooking, setStartBooking] = useState(new Date("1970 "))
   const handleFetch = async () => {
     let response = await fetch("http://localhost:3000");
     const responseSeats = await response.json();
@@ -26,18 +27,17 @@ function App() {
     } else setSelectedSeatCount([...selectedSeats, e]);
   };
   const handleSubmit = async () => {
-    const a = JSON.stringify(selectedSeats);
-    console.log(a);
+    const selectSeats = JSON.stringify(selectedSeats);
     let response = await fetch("http://localhost:3000", {
-      body: a,
+      body: selectSeats,
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
     });
-    console.log(response.status);
     if (response.status == 202) {
       setIsPaying(true);
+      setStartBooking(Date.now())
     }
   };
   const handleEmail = async (e) => {
@@ -45,13 +45,21 @@ function App() {
       seats: selectedSeats,
       email: e.target[0].value,
     };
-    let response = await fetch("http://localhost:3000/email", {
+    const paymentDate = Date.now();
+    const diffBetweenDatesInMinutes = (paymentDate - startBooking)/(1000*60)
+    console.log(diffBetweenDatesInMinutes);
+    e.preventDefault()
+    if(diffBetweenDatesInMinutes>2){
+      alert("You took too long :C")
+    }
+    await fetch("http://localhost:3000/email", {
       body: JSON.stringify(seatsWithEmail),
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
     });
+
   };
   return isPaying ? (
     <div>
