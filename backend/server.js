@@ -15,13 +15,12 @@ app.use(cors());
 app.use(express.json());
 app.get("/", (req, res) => {
   connection.query(
-    "select * from seats where seat_number = 1",
+    "select * from seats",
     (err, rows, fields) => {
       if (err) throw err;
-      console.log(rows);
+      res.send(rows);
     }
   );
-  res.send();
 });
 app.post("/", (req, res) => {
   let a = req.body;
