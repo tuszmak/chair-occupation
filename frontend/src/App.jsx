@@ -1,6 +1,4 @@
 import { useEffect, useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
 import "./App.css";
 import { Seat } from "./components/Seat";
 
@@ -12,7 +10,6 @@ function App() {
   const handleFetch = async () => {
     let response = await fetch("http://localhost:3000");
     const responseSeats = await response.json();
-    console.log(responseSeats);
     setSeats(responseSeats);
   };
   useEffect(() => {
@@ -47,8 +44,6 @@ function App() {
     };
     const paymentDate = Date.now();
     const diffBetweenDatesInMinutes = (paymentDate - startBooking)/(1000*60)
-    console.log(diffBetweenDatesInMinutes);
-    e.preventDefault()
     if(diffBetweenDatesInMinutes>2){
       alert("You took too long :C")
     }

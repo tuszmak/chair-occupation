@@ -35,7 +35,6 @@ app.post("/", (req, res) => {
         }
       }
     );
-    console.log(isAllSeatsAvailable);
   });
   if (isAllSeatsAvailable) {
     req.body.forEach((seatNum) => {
@@ -46,7 +45,6 @@ app.post("/", (req, res) => {
         }
       );
     });
-    console.log("I'm doing it!");
     res.status(202)
     res.write("Cool!");
   } 
@@ -58,8 +56,6 @@ app.post("/", (req, res) => {
 });
 app.post("/email", (req, res) => {
   const {seats, email} = req.body;
-  console.log(seats);
-  console.log(email);
   let isSomeoneFaster = false;
   seats.forEach((seatNum) => {
     connection.query(
